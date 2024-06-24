@@ -8,12 +8,14 @@ file_types = {
     'pdf': 'PDF_Files',
     'docx': 'Word_Documents',
     'xlsx': 'Excel_Documents',
+    'all' : 'Random_Docs'
 }
 
 # Create directories for each file type if they don't exist
 for folder_name in file_types.values():
     folder_path = os.path.join(downloads_folder, folder_name)
-    os.makedirs(folder_path, exist_ok=True)
+    if(not os.path.exists(folder_path)):
+        os.makedirs(folder_path, exist_ok=True)
 
 # Iterate over files in the Downloads folder
 for filename in os.listdir(downloads_folder):
@@ -32,4 +34,6 @@ for filename in os.listdir(downloads_folder):
             shutil.move(file_path, destination_folder)
             print(f"Moved '{filename}' to '{destination_folder}'")
         else:
-            print(f"Skipped '{filename}' (Unknown file type)")
+            destination_folder = os.path.join(downloads_folder, "Random_Docs")
+            shutil.move(file_path, destination_folder)
+            print(f"Moved '{filename}' to {destination_folder}")
